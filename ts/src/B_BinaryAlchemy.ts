@@ -1,22 +1,31 @@
-// ntp && node ./dist/B_BinaryAlchemy.js < ./input.txt
+function binaryAlchemy(input: string): void {
+  // Split inputs into new lines and get n.
+  const lines = input.split('\n');
+  const n = parseInt(lines[0]);  // number of elements
 
-function BinaryAlchemy(input: string): void {
-  console.log(`input: 
-${input}`)
-
-  const inputs: number[][] = input.split("\n").map(line => line.split(' ').map(Number));
-  const n = inputs[0][0];
-  const elm: number[][] = inputs.slice(1);
-  // let a = 0;
-  let i = 0;
-  
-  for (let j = 1; j <= n; j++) {
-    if ( i >= j ) { i = elm[i][j]; }
-    if ( i < j ) { i = elm[j][i]; }
+  // Create 2D array by reading a[i][j].
+  const a: number[][] = [];
+  let lineIndex = 1;
+  for (let i = 0; i < n; i++) {
+    a.push(lines[lineIndex].split(' ').map(Number));
+    lineIndex++;
   }
-  
-  console.log(i);
-  
+  console.log(`${a}`)
+
+  let result = 1; // the initial element
+
+  // Combine elements.
+  for (let j = 1; j <= n; j++) {
+    //!! There is a 1-point discrepancy between the elements number and the index.
+    if (result >= j) {
+      result = a[result - 1][j - 1];  // if i≥j, i and j transform into element a[i][j]j 
+    } else {
+      result = a[j - 1][result - 1];  // if i<j, i and j transform into element a[j][i]j 
+    }
+  }
+
+  // Output final result.
+  console.log(result);
 }
 
-BinaryAlchemy(require("fs").readFileSync("/dev/stdin", "utf8"));
+binaryAlchemy(require("fs").readFileSync("/dev/stdin", "utf8"));

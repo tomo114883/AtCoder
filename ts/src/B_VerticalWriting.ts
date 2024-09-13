@@ -1,4 +1,4 @@
-function VerticalWriting(input: string): void {
+function verticalWriting(input: string): void {
   // Receive inputs.
   const inputs = input.split("\n");
   const n = parseInt(inputs[0]);
@@ -35,4 +35,4 @@ function VerticalWriting(input: string): void {
   console.log(t.join("\n"));
 }
 
-VerticalWriting(require("fs").readFileSync("/dev/stdin", "utf8"));
+verticalWriting(require("fs").readFileSync("/dev/stdin", "utf8"));
