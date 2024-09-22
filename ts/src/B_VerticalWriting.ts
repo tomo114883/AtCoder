@@ -1,38 +1,33 @@
-function verticalWriting(input: string): void {
-  // Receive inputs.
-  const inputs = input.split("\n");
-  const n = parseInt(inputs[0]);
-
-  // Initialize arrays
-  let s: string[] = [];
-  let t: string[] = [];
-
-  for (let i = 1; i <= n; i++) {
-    s.push(inputs[i]);
-  }
-
-  // Find the maximum length of the strings in the array `s`
-  const maxLength = s.reduce((acc, curr) => Math.max(acc, curr.length), 0);
-
-  // Reverse the array `s`
-  s = s.reverse();
-
-  // Convert a horizontally written text to vertical writing
-  for (let j = 0; j < maxLength; j++) {
-    let tLine = "";
-    for (let k = 0; k < n; k++) {
-      tLine += s[k][j] || "*"; // Fill with "*" if the index is out of bounds
+const verticalWriting = (input: string) => {
+  // TODO: Receive input.
+  const lines = input.split(/\n/);
+  // console.log(lines)
+  const n = parseInt(lines[0]);
+  // Get max length of a value on this array.
+  const m = Math.max(...lines.map(line => line.length));
+  // console.log(m)
+  const padLines = lines.splice(1, n);
+  // console.log(padLines)
+  // Generate 2D array, which is m and its length is n.
+  const verticalArray: string[][] = Array.from({ length: m }, () => Array(n).fill("*"));
+  let ans: string[] = [];
+  // console.log(verticalArray)
+  // TODO: Process here.
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < padLines[i].length; j++) {
+      verticalArray[j][n - 1 - i] = padLines[i][j];
     }
-    t.push(tLine);
   }
+  // console.log(verticalArray)
 
-  // Remove trailing "*" from each line in `t`
-  for (let l = 0; l < t.length; l++) {
-    t[l] = t[l].replace(/\*+$/, "");
+  // TODO: Output ans sliced by last * on the line.
+  for (let i = 0; i < m; i++) {
+    while (verticalArray[i].length > 0 && verticalArray[i][verticalArray[i].length - 1] === "*") {
+      verticalArray[i].pop();
+    }
+    ans[i] = verticalArray[i].join("");
   }
-
-  // Output the result
-  console.log(t.join("\n"));
+  console.log(ans.join("\n"));
 }
 
 verticalWriting(require("fs").readFileSync("/dev/stdin", "utf8"));
