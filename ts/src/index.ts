@@ -1,4 +1,4 @@
-const SayHello = (input: string) => {
+const sayHello = (input: string) => {
   // TODO: Receive input.
   const lines = input.split(/\n/);
   const n = parseInt(lines[0]);
@@ -7,4 +7,4 @@ const SayHello = (input: string) => {
   console.log(`Hello, ${input}`);
 }
 
-SayHello(require("fs").readFileSync("/dev/stdin", "utf8"));
+sayHello(require("fs").readFileSync("/dev/stdin", "utf8"));
