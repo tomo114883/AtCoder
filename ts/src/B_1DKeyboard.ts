@@ -1,34 +1,8 @@
 const oneDKeyboard = (input: string) => {
   // Receive input.
   const permutationOfAZ = input.trim();
-  const alphabetArray = [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'V',
-    'W',
-    'X',
-    'Y',
-    'Z',
-  ];
+  // Generate an array to determine if the value match with input.
+  const alphabetArray = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ']; // using spread syntax can make an array easily.
   // initialization
   let posOfFinger = -1;
   let totalDistance = 0;
@@ -46,7 +20,7 @@ const oneDKeyboard = (input: string) => {
       posOfFinger = nextPos;
     }
   });
-  // Output ans as the minimal total traveled distance.
+  // Output ans.
   console.log(`${totalDistance}`);
 };
 
