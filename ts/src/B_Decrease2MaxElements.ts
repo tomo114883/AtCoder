@@ -1,24 +1,17 @@
 const decrease2MaxElements = (input: string) => {
-  // TODO: Receive input.
+  // Receive input.
   const lines = input.split(/\n/);
-  const n = parseInt(lines[0]);
-  const a = lines[1].split(/ /).map(Number).sort((x, y) => y - x);
-  let ans = 0;
-  // console.log(a)
-
-  // TODO: Process here.
-  // Sort A in descending order. Then, decrease both A1 and A2 by 1.
-    // Determine where each a is positive element.
-    while (a[0] > 0 && a[1] > 0) {
-      a[0] -= 1;
-      a[1] -= 1;
-      ans++;
-      a.sort((x, y) => y - x);
-      // console.log(a)
-    }
-
-  // TODO: Output ans.
-  console.log(ans);
-}
-
-decrease2MaxElements(require("fs").readFileSync("/dev/stdin", "utf8"));
+  const sequence = lines[1].split(/ /).map(Number);
+  // Sort in descending order and decrease both max elements by 1.
+  let sortedSequence = [...sequence].sort((a, b) => b - a);
+  let cnt = 0;
+  while (sortedSequence[0] > 0 && sortedSequence[1] > 0) {
+    sortedSequence[0] -= 1;
+    sortedSequence[1] -= 1;
+    sortedSequence = sortedSequence.sort((a, b) => b - a);
+    cnt++;
+  }
+  // Output ans as times of operations.
+  console.log(cnt);
+};
+decrease2MaxElements(require('fs').readFileSync('/dev/stdin', 'utf8'));
