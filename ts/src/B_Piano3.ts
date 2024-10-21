@@ -1,31 +1,45 @@
 const piano3 = (input: string) => {
-  //TODO: Receive inputs.
-  const lines = input.split("\n");
-  const n = parseInt(lines[0]);
-  const items = lines.splice(1, n).map(line => {
-    const [a, s] = line.split(" ");
-    return { a: parseInt(a), s: s};
-  });
-  // console.log(items)
-
-  //TODO: Process the calculations each L and R.
-  let pos = [-1, -1]; // position of hand
-  let fatigueLev = 0; // ans as the minimum fatigue level
-  
-  for (let i = 0; i < n; i++) {
-    const { a, s } = items[i];
-    const hand = (s === "L") ? 0 : 1; // Define which hand is moved.
-
-    // Calculate the fatigue level at this time.
-    if (pos[hand] !== -1) {
-      fatigueLev += Math.abs(a - pos[hand]);
+  // Receive input.
+  const lines = input.split(/\n/);
+  const instructions: { pos: number; hand: string }[] = lines
+    .splice(1)
+    .map((line) => {
+      const [pos, hand] = line.split(/ /);
+      return { pos: parseInt(pos), hand: hand };
+    });
+  // Init a fatigue level.
+  let [fatigueForL, fatigueForR] = [0, 0];
+  let [posOfL, posOfR] = [0, 0];
+  let fatigue = 0;
+  // Calculate a fatigue level.
+  instructions.map((instruction) => {
+    const { pos, hand } = instruction;
+    if (hand === 'L') {
+      // Calculate for a left hand.
+      if (fatigueForL === 0) {
+        posOfL = pos;
+        fatigueForL = pos;
+      } else if (pos === posOfL) {
+      } else {
+        fatigueForL = Math.abs(pos - posOfL);
+        fatigue += fatigueForL;
+        posOfL = pos;
+      }
+    } else {
+      // Calculate for a right hand.
+      if (fatigueForR === 0) {
+        posOfR = pos;
+        fatigueForR = pos;
+      } else if (pos === posOfR) {
+      } else {
+        fatigueForR = Math.abs(pos - posOfR);
+        fatigue += fatigueForR;
+        posOfR = pos;
+      }
     }
-    
-    pos[hand] = a; // Move the hand.
-  }
+  });
+  // Output ans as a fatigue level for a performance.
+  console.log(fatigue);
+};
 
-  //TODO: Output the minimum fatigue level
-  console.log(fatigueLev)
-}
-
-piano3(require("fs").readFileSync("/dev/stdin", "utf8"));
+piano3(require('fs').readFileSync('/dev/stdin', 'utf8'));
