@@ -4,7 +4,7 @@ const sayHello = (input: string) => {
   const n = parseInt(lines[0]);
   // TODO: Process here.
   // TODO: Output ans.
-  console.log(`Hello, ${input}`);
-}
+  console.log(input);
+};
 
-sayHello(require("fs").readFileSync("/dev/stdin", "utf8"));
+sayHello(require('fs').readFileSync('/dev/stdin', 'utf8'));
