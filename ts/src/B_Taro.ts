@@ -1,34 +1,38 @@
+type FamilyStructure = {
+  familyId: number;
+  gender: 'M' | 'F';
+};
+
 const taro = (input: string) => {
-  // TODO: Receive input.
-  const lines = input.split("\n");
-  const [n, m] = lines[0].split(" ").map(Number);
-  const babies = lines.splice(1, m).map(line => {
-    const [a, b] = line.split(" ");
-    return { a: parseInt(a), b: b };
+  // Receive input.
+  const lines = input.trim().split(/\n/);
+  const [n] = lines[0].split(/ /).map(Number);
+  const familyStructure: FamilyStructure[] = lines.slice(1).map((line) => {
+    const [familyId, gender] = line.split(/ /);
+    return {
+      familyId: parseInt(familyId),
+      gender: gender as 'M' | 'F',
+    };
   });
-  const determination: string[] = [];
-  // console.log(babies)
-  let firstBabies: number[] = [];
-  for (let i = 0; i < n; i++) {
-    firstBabies[i] = -1;
-  }
-  // console.log(firstBabies)
 
-  // TODO: Process here.
-  // Determine whether the family num is first occur.
-  for (let j = 0; j < m; j++) {
-    const {a, b} = babies[j];
-    if (firstBabies[a - 1] === -1 && b === "M") {
-      determination.push("Yes");
-      firstBabies[a - 1]++;
+  // Create an array to determine whether each families have the eldest son.
+  let isEldestSon: boolean[] = Array(n + 1).fill(false);
+  let existence: string[] = [];
+
+  // Determine whether the eldest son have already been born.
+  const determineExistence = familyStructure.map((family) => {
+    if (family.gender === 'M') {
+      if (!isEldestSon[family.familyId]) {
+        existence.push('Yes');
+        isEldestSon[family.familyId] = true;
+      } else {
+        existence.push('No');
+      }
     } else {
-      determination.push("No");
+      existence.push('No');
     }
-  }
-  // console.log(determination)
-  // TODO: Output ans joined newline.
-  const ans = determination.join("\n");
-  console.log(ans);
-}
-
-taro(require("fs").readFileSync("/dev/stdin", "utf8"));
+  });
+  // Output ans as existence of the eldest sons in each family.
+  console.log(existence.join('\n'));
+};
+taro(require('fs').readFileSync('/dev/stdin', 'utf8'));
