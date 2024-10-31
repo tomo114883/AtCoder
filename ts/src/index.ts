@@ -1,7 +1,6 @@
 const sayHello = (input: string) => {
   // TODO: Receive input.
-  const lines = input.split(/\n/);
-  const n = parseInt(lines[0]);
+  const lines = input.trim().split(/\n/);
   // TODO: Process here.
   // TODO: Output ans.
   console.log(input);
