@@ -5,12 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch Program",
-      "program": "${workspaceFolder}/ts/dist/index.js", // Change this end file to debug.
+      "type": "node", // required 
+      "request": "launch", // required
+      "name": "Launch Program", // required
+      "preLaunchTask": "tsc: build - ts/tsconfig.json",
+      "cwd": "${workspaceFolder}",
+      "program": "${file}",
       "console": "integratedTerminal",
-      "preLaunchTask": "tsc: build - ts/tsconfig.json"
+      "args": ["<", "${workspaceFolder}/ts/input.txt"]
     }
   ]
 }
