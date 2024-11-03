@@ -7,32 +7,26 @@ const gridWalk = (input: string) => {
     .slice(2, h + 2)
     .map((line) => line.split(''));
   const instructions: string[] = lines[h + 2].split('');
+  const di = [-1, 0, 1, 0];
+  const dj = [0, -1, 0, 1];
   // Denote the cell at the i-th row from the top and j-th column from the left.
   let pos = { i: si - 1, j: sj - 1 };
 
   // Get each instruction from the instructions array.
-  instructions.map((inst) => {
-    if (inst === 'L') {
-      // If the instruction is 'L', move to the left from current position.
-      if (pos.j > 0 && cells[pos.i][pos.j - 1] !== '#') {
-        pos.j -= 1;
-      }
-    } else if (inst === 'R') {
-      // If the instruction is 'R', move to the right from current position.
-      if (pos.j < w - 1 && cells[pos.i][pos.j + 1] !== '#') {
-        pos.j += 1;
-      }
-    } else if (inst === 'U') {
-      // If the instruction is 'U', move to the up from current position.
-      if (pos.i > 0 && cells[pos.i - 1][pos.j] !== '#') {
-        pos.i -= 1;
-      }
-    } else {
-      // If the instruction is 'D', move to the down from current position.
-      if (pos.i < h - 1 && cells[pos.i + 1][pos.j] !== '#') {
-        pos.i += 1;
-      }
-    }
+  instructions.forEach((inst) => {
+    let v = 0;
+    if (inst === 'L') v = 0;
+    if (inst === 'R') v = 1;
+    if (inst === 'U') v = 2;
+    if (inst === 'D') v = 3;
+    // Move to the next cell.
+    const ni = pos.i + di[v];
+    const nj = pos.j + dj[v];
+    // Check if the next cell is within the grid.
+    if (ni < 0 || ni >= h || nj < 0 || nj >= w) return;
+    if (cells[ni][nj] === '#') return;
+    // Update the current position.
+    pos = { i: ni, j: nj };
   });
 
   // Output ans.
