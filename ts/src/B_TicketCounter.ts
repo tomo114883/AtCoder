@@ -4,18 +4,13 @@ const ticketCounter = (input: string) => {
   const [n, takingSeconds] = lines[0].split(/ /).map(Number);
   const arrivingTimes = lines[1].split(/ /).map(Number);
 
-  // Output each times people finish purchasing tickets process.
-  arrivingTimes.reduce((acc, cur) => {
-    const seconds = cur + takingSeconds;
-    const accSeconds = acc + takingSeconds;
-    if (seconds > accSeconds) {
-      console.log(seconds);
-      return seconds;
-    } else {
-      console.log(accSeconds);
-      return accSeconds;
-    }
-  }, 0);
+  // Output each time people finish purchasing tickets process.
+  let lastFinishTime = 0;
+  arrivingTimes.forEach((arrivingTime) => {
+    const finishTime = Math.max(arrivingTime, lastFinishTime) + takingSeconds;
+    console.log(finishTime);
+    lastFinishTime = finishTime;
+  });
 };
 
 ticketCounter(require('fs').readFileSync('/dev/stdin', 'utf8'));
